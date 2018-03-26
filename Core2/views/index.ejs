@@ -1,7 +1,15 @@
 <% include partials/headers %>
+  <h1>HELLO FROM EJS</h1>
+  <h1> Add Customer</h1>
+    <ul>
+      <% if(errors){ %>
+        <% errors.forEach(function(errors){ %>
+          <li><%= errors.msg %> </li>
+        <% }) %>
+    </ul>
+      <% } %>
 
-<H1>HELLO FROM EJS</H1>
-<h1> Add Customer</h1>
+
   <form method="post" action="/users/add">
     <label>First Name</label><br>
     <input type="text" name="first_name">
@@ -19,7 +27,6 @@
 
 <ul>
 <% users.forEach(function(users){ %>
-
 <li><%=users.first_name%> <%=users.last_name%></li>
 <% }) %>
 

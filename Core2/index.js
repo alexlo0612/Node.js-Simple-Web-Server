@@ -22,7 +22,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 /*Set Static path
 app.use(express.static(path.join(__dirname, 'root')));
 */
-
+//Global Variables
+app.use(function(req,res,next){
+  res.locals.errors = null
+  next();
+});
 //Input Validation Middleware
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
@@ -108,13 +112,19 @@ app.post('/users/add',function(req, res){
   //console.log(req.body.first_name);
 
 //Input Validation
-  req.checkBody('first_name','Required!').notEmpty();
-  req.checkBody('last_name','Required!').notEmpty();
-  req.checkBody('email','Required!').notEmpty();
+  req.checkBody('first_name','First Name is Required!').notEmpty();
+  req.checkBody('last_name','Last Name is Required!').notEmpty();
+  req.checkBody('email','Email is Required!').notEmpty();
 
   const errors = req.validationErrors();
   if(errors){
-    console.log('ERRORS'); //Print errors if anything gone wrong
+    console.log('ERRORS');
+    res.render('index', {
+      title: 'Customer',
+      users: users,
+      errors: errors
+
+    }); //Print errors if anything gone wrong
   }else {                 //Else create a new user
     const new_user = {
       first_name: req.body.first_name,
