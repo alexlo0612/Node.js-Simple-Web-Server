@@ -106,11 +106,12 @@ app.get('/', function(req,res){
 app.post('/users/add',function(req, res){
   //console.log('Form Submitted');
   //console.log(req.body.first_name);
+
+//Input Validation
   req.checkBody('first_name','Required!').notEmpty();
   req.checkBody('last_name','Required!').notEmpty();
   req.checkBody('email','Required!').notEmpty();
 
-//Input Validation
   const errors = req.validationErrors();
   if(errors){
     console.log('errors'); //Print errors if anything gone wrong
