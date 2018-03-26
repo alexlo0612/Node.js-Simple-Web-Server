@@ -1,0 +1,9 @@
+<html>
+  <head>
+    <title>Kick Ass</title>
+  </head>
+  <body>
+    <H1>HELLOW FROM EJS</H1>
+    <h2><%= title %> </h2>
+  </body>
+</html>
