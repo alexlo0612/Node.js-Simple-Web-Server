@@ -114,7 +114,7 @@ app.post('/users/add',function(req, res){
 
   const errors = req.validationErrors();
   if(errors){
-    console.log('errors'); //Print errors if anything gone wrong
+    console.log('ERRORS'); //Print errors if anything gone wrong
   }else {                 //Else create a new user
     const new_user = {
       first_name: req.body.first_name,
@@ -122,7 +122,7 @@ app.post('/users/add',function(req, res){
       email: req.body.email
     }
     console.log(new_user);
-    console.log(success);
+    console.log('SUCCESS');
   }
 });
 
