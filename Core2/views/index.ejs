@@ -27,7 +27,7 @@
 
 <ul>
 <% users.forEach(function(users){ %>
-<li><%=users.first_name%> <%=users.last_name%></li>
+<li><%=users.first_name%> <%=users.last_name%> - <a href="#" class= "deleteUser" data-id ="<%=users._id %>">Delete </a></li>
 <% }) %>
 
 </ul>

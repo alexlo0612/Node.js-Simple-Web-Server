@@ -6,6 +6,7 @@ const expressValidator = require ('express-validator');
 const app = express();
 const mongojs = require('mongojs');
 const db = mongojs('nodejs',['users']);
+const ObjectId =mongojs.ObjectId;
 
 //Middleware-> Loggin Example (Everytime when reload)
 const logger = function(req,res,next){
@@ -21,9 +22,9 @@ app.set('set',path.join(__dirname, 'views')); //Relative Path to the Folder
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-/*Set Static path
+//Set Static path
 app.use(express.static(path.join(__dirname, 'root')));
-*/
+
 //Global Variables
 app.use(function(req,res,next){
   res.locals.errors = null
@@ -75,7 +76,7 @@ const person = {
 }
 */
 
-/*//Current User List
+//Current User List
 const users =[
   {
     id:1,
@@ -96,7 +97,7 @@ const users =[
     email:'Stalizanashyorni@gmail.com',
   }
 ]
-*/
+
 
 //Web Page Content (What gets delieverd when people visit your site)
 app.get('/', function(req,res){
@@ -149,6 +150,16 @@ app.post('/users/add',function(req, res){
   }
 });
 
+//Delete Route for Ajax 
+app.delete('/users/delete/:id', function(req, res){
+  console.log(req.params.id);
+  db.users.remove({_id: ObjectId(req.params.id)}, function(err, result){
+    if(err){
+      console.log(err);
+    }
+    res.redirect('/');
+  });
+});
 //Server Listening on Port 3000
 app.listen(3000,function(){
     console.log('Server started on port 3000');
