@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const path = require ('path');
 const expressValidator = require ('express-validator');
 const app = express();
+const mongojs = require('mongojs');
+const db = mongojs('nodejs',['users']);
 
 //Middleware-> Loggin Example (Everytime when reload)
 const logger = function(req,res,next){
@@ -73,7 +75,7 @@ const person = {
 }
 */
 
-//Current User List
+/*//Current User List
 const users =[
   {
     id:1,
@@ -94,16 +96,21 @@ const users =[
     email:'Stalizanashyorni@gmail.com',
   }
 ]
+*/
 
 //Web Page Content (What gets delieverd when people visit your site)
 app.get('/', function(req,res){
+  db.users.find(function(err, docs){
+    console.log(docs);
+    res.render('index', {
+      title: 'Customer',
+      //users: users
+      users: docs
+    });
+  });
   //res.send('Hello World');
   //res.json(person);
   //res.json(people);
-  res.render('index', {
-    title: 'Customer',
-    users: users
-  });
 });
 
 //When People Interact with Your site (the button)
@@ -133,6 +140,12 @@ app.post('/users/add',function(req, res){
     }
     console.log(new_user);
     console.log('SUCCESS');
+    db.users.insert(new_user, function(err, result){
+      if(err){
+        console.log(err);
+      }
+      res.redirect('/');
+    });
   }
 });
 
