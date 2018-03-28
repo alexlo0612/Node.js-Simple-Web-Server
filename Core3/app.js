@@ -60,19 +60,21 @@ app.post('/', function(req, res) {
         console.log('The City Does Not Exist');
       } else { //Get Location Key + Longitude & Latitude
         //console.log(stage1[0].Key);
-        let locationkey = stage1[0].key
+        let locationkey = stage1[0].Key
         let Latitude = stage1[0].GeoPosition.Latitude
         let Longitude = stage1[0].GeoPosition.Longitude
         //console.log(stage1[0].GeoPosition.Latitude);
         //console.log(stage1[0].GeoPosition.Longitude);
         res.render('index',{Latitude:'Latitude: ' + Latitude, Longitude:'Longitude: '+ Longitude, error: null})
         let url2 = `http://apidev.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
-        request(ulr2, function(err, response, body){
+        request(url2, function(err, response, body){
           if(err){
             res.render('index', {Latitude: null, Longitude: null, error:'Error!!!'});
           } else {
             let stage2 = JSON.parse(body);
-            let weathertext = stage2[0].weathertext
+            //console.log(stage2);
+            let weathertext = stage2[0].WeatherText;
+            //console.log(weathertext);
 
           }
 
