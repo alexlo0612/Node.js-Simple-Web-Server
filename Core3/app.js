@@ -3,7 +3,6 @@ const express = require ('express');
 const bodyParser = require ('body-parser');
 const path = require ('path');
 const request = require ('request');
-
 //Global Variable
 //const apikey = 'haecPfYw9wk6eqUVNGAjumbeIEEFkmIy'
 const apikey = 'hoArfRosT1215'
@@ -28,7 +27,7 @@ app.set('views',path.join(__dirname, 'views'));
 app.get('/',function(req,res){
   //res.send('Hello World!')
   console.log('We Got Visit Here!');
-  res.render('index');
+  res.render('index', {error: null});
 });
 
 //HTTP Post Request Handling
@@ -51,7 +50,7 @@ request(url, function(err, response, body){
     let stage1 = JSON.parse(body); //Parse Json Response
     //console.log(stage1);
     if(stage1[0] == undefined){    //Check Validity
-      res.render('index',{error:'The Freak"n City You Just Entered Does Not Exist'});
+      //res.render('index', {error:'The Freaking City You Just Entered Does Not Exist'});
       console.log('The City Does Not Exist');
     } else {                      //Get Location Key + Longitude & Latitude
       console.log(stage1[0].Key);

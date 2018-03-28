@@ -11,6 +11,10 @@
         <input name="city" type="text" placeholder="Enter a City" required>
         <input name="lol" type="submit" value="Get Weather">
       </form>
+      <% if(error !== null){ %>
+        <p><%= error %> </p>
+      <% } %>
+
     </fieldset>
   </body>
 </html>
