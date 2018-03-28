@@ -74,7 +74,7 @@ app.post('/', function(req, res) {
             let stage2 = JSON.parse(body);
             //console.log(stage2);
             let weathertext = stage2[0].WeatherText;
-            //console.log(weathertext);
+            console.log(weathertext);
 
           }
 
