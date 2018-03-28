@@ -12,7 +12,7 @@ const (var) --> global variable
 let --> block variable
 */
 
-//Define App
+//Define & Initialize App
 const app = express();
 
 //Set Up URL Parser
@@ -33,6 +33,8 @@ app.get('/', function(req, res) {
     error: null,
     Latitude: null,
     Longitude: null,
+    Weather: null,
+    Temperature: null
   });
 });
 
@@ -49,35 +51,84 @@ app.post('/', function(req, res) {
   //Make API Call
   request(url, function(err, response, body) {
     if (err) { //Check Misc. Errors
-      res.render('index', {Latitude: null, Longitude: null, error:'Error!!'});
+      res.render('index', {
+        error: 'Error!!',
+        Latitude: null,
+        Longitude: null,
+        Weather: null,
+        Temperature: null
+
+      });
       console.log('Error!!');
     } else {
       //console.log(body);
       let stage1 = JSON.parse(body); //Parse Json Response
       //console.log(stage1);
       if (stage1[0] == undefined) { //Check Validity
-        res.render('index', {Latitude: null, Longitude: null, error:'The Freaking City You Just Entered Does Not Exist'});
+        res.render('index', {
+          error: 'The Freaking City You Just Entered Does Not Exist',
+          Latitude: null,
+          Longitude: null,
+          Weather: null,
+          Temperature: null
+
+        });
         console.log('The City Does Not Exist');
       } else { //Get Location Key + Longitude & Latitude
         //console.log(stage1[0].Key);
-        let locationkey = stage1[0].Key
-        let Latitude = stage1[0].GeoPosition.Latitude
-        let Longitude = stage1[0].GeoPosition.Longitude
-        //console.log(stage1[0].GeoPosition.Latitude);
-        //console.log(stage1[0].GeoPosition.Longitude);
-        res.render('index',{Latitude:'Latitude: ' + Latitude, Longitude:'Longitude: '+ Longitude, error: null})
+        let locationkey = stage1[0].Key;
+        let Latitude = stage1[0].GeoPosition.Latitude;
+        let Longitude = stage1[0].GeoPosition.Longitude;
+        console.log(stage1[0].GeoPosition.Latitude);
+        console.log(stage1[0].GeoPosition.Longitude);
+
+        /*res.render('index', {
+          error: null,
+          Latitude: 'Latitude: ' + Latitude,
+          Longitude: 'Longitude: ' + Longitude,
+          Weather: null,
+          Temperature: null
+        }); */
+
         let url2 = `http://apidev.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
-        request(url2, function(err, response, body){
-          if(err){
-            res.render('index', {Latitude: null, Longitude: null, error:'Error!!!'});
+        request(url2, function(err, response, body) {
+          if (err) {
+            res.render('index', {
+              error: 'Error!!!',
+              Latitude: null,
+              Longitude: null,
+              Weather: null,
+              Temperature: null
+            });
+            console.log('Error!!');
           } else {
             let stage2 = JSON.parse(body);
-            //console.log(stage2);
-            let weathertext = stage2[0].WeatherText;
-            console.log(weathertext);
+            let Weather = stage2[0].WeatherText;
+            let Temperature = stage2[0].Temperature.Metric.Value;
+            console.log(stage2[0].WeatherText);
+            console.log(stage2[0].Temperature.Metric.Value);
+            res.render('index',{
+              error: null,
+              Latitude: 'Latitude: ' + Latitude,
+              Longitude: 'Longitude: ' + Longitude,
+              Weather: 'Condition: ' + Weather,
+              Temperature: 'Temperature: ' + Temperature +' Celcius'
+            });
+            /*console.log(body);
+            console.log(stage2);
+            let Weather = stage2[0].WeatherText;
+            let Temp = stage2[0].Temperature.Metric;
+            console.log(Weather + Temp); */
 
-          }
-
+            /*function parsed(body){
+              if(body && body.length > 0){
+                let condition = body[0];
+                let temp = condition.Temperature.Metric;
+                console.log(temp); */
+                //console.log(body[0]);
+                //let Tempp = JSON.parse(stage2[0].Temperature);
+                //console.log(Tempp[0]);
+            }
         });
         //console.log(stage1[0]);
         //console.log(stage1.Key);

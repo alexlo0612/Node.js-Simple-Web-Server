@@ -3,24 +3,32 @@
   <head>
     <meta charset="utf-8">
     <title>Weather</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <fieldset>
-      <form action="/" method="post">
-        <input name="city" type="text" placeholder="Enter a City" required>
-        <input name="lol" type="submit" value="Get Weather">
-      </form>
-      <% if(error !== null){ %>
-        <p><%= error %> </p>
-      <% } %>
-      <%if(Latitude !== null){ %>
-        <h1><%= Latitude %> </h1>
-      <% } %>
-      <%if(Longitude !== null){ %>
-        <h1><%= Longitude %> </h1>
-      <% } %>
+    <div class="container">
+      <fieldset>
+        <form action="/" method="post">
+          <input name="city" type="text" placeholder="Enter a City" class ="weather-input" required>
+          <input name="lol" type="submit" value="Get Weather" class="weather-button">
+        </form>
+        <% if(error !== null){ %>
+          <h1><%= error %> </h1>
+        <% } %>
+        <%if(Latitude !== null){ %>
+          <h1><%= Latitude %> </h1>
+        <% } %>
+        <%if(Longitude !== null){ %>
+          <h1><%= Longitude %> </h1>
+        <% } %>
+        <%if(Weather !== null){ %>
+          <h1><%= Weather %> </h1>
+        <% } %>
+        <%if(Temperature !== null){ %>
+          <h1><%= Temperature %> </h1>
+        <% } %>
+      </div>
 
-    </fieldset>
+      </fieldset>
   </body>
 </html>
