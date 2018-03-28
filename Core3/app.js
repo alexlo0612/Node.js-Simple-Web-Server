@@ -112,7 +112,7 @@ app.post('/', function(req, res) {
               Latitude: 'Latitude: ' + Latitude,
               Longitude: 'Longitude: ' + Longitude,
               Weather: 'Condition: ' + Weather,
-              Temperature: 'Temperature: ' + Temperature +' Celcius'
+              Temperature: 'Temperature: ' + Temperature +' Celsius'
             });
             /*console.log(body);
             console.log(stage2);
