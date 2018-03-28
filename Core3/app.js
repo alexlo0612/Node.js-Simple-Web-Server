@@ -30,7 +30,9 @@ app.get('/', function(req, res) {
   //res.send('Hello World!')
   console.log('We Got Visit Here!');
   res.render('index', {
-    error: null
+    error: null,
+    Latitude: null,
+    Longitude: null,
   });
 });
 
@@ -47,21 +49,34 @@ app.post('/', function(req, res) {
   //Make API Call
   request(url, function(err, response, body) {
     if (err) { //Check Misc. Errors
-      res.render('index', {
-        error: 'The Freak"n City You Just Entered Does Not Exist'
-      });
+      res.render('index', {Latitude: null, Longitude: null, error:'Error!!'});
       console.log('Error!!');
     } else {
       //console.log(body);
       let stage1 = JSON.parse(body); //Parse Json Response
       //console.log(stage1);
       if (stage1[0] == undefined) { //Check Validity
-        //res.render('index', {error:'The Freaking City You Just Entered Does Not Exist'});
+        res.render('index', {Latitude: null, Longitude: null, error:'The Freaking City You Just Entered Does Not Exist'});
         console.log('The City Does Not Exist');
       } else { //Get Location Key + Longitude & Latitude
-        console.log(stage1[0].Key);
-        console.log(stage1[0].GeoPosition.Latitude);
-        console.log(stage1[0].GeoPosition.Longitude);
+        //console.log(stage1[0].Key);
+        let locationkey = stage1[0].key
+        let Latitude = stage1[0].GeoPosition.Latitude
+        let Longitude = stage1[0].GeoPosition.Longitude
+        //console.log(stage1[0].GeoPosition.Latitude);
+        //console.log(stage1[0].GeoPosition.Longitude);
+        res.render('index',{Latitude:'Latitude: ' + Latitude, Longitude:'Longitude: '+ Longitude, error: null})
+        let url2 = `http://apidev.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
+        request(ulr2, function(err, response, body){
+          if(err){
+            res.render('index', {Latitude: null, Longitude: null, error:'Error!!!'});
+          } else {
+            let stage2 = JSON.parse(body);
+            let weathertext = stage2[0].weathertext
+
+          }
+
+        });
         //console.log(stage1[0]);
         //console.log(stage1.Key);
         //console.log(stage1.Version);
