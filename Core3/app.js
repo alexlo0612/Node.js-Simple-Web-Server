@@ -8,7 +8,6 @@ const request = require ('request');
 //const apikey = 'haecPfYw9wk6eqUVNGAjumbeIEEFkmIy'
 const apikey = 'hoArfRosT1215'
 
-
 /*
 const (var) --> global variable
 let --> block variable
@@ -42,15 +41,17 @@ app.post('/',function(req,res){
   console.log('API URL is '+ url);
 request(url, function(err, response, body){
   if(err){
-    res.render('index',{error:'The Freak"n City You Entered Does Not Exist'});
+    res.render('index',{error:'The Freak"n City You Just Entered Does Not Exist'});
   } else {
-    console.log(body);
+
+    //console.log(body);
     let stage1 = JSON.parse(body);
-    console.log(stage1);
+    //console.log(stage1);
+    console.log(stage1[0].Key);
     //console.log(stage1.Key);
     //console.log(stage1.Version);
+  }
 
-    }
 });
 });
 
