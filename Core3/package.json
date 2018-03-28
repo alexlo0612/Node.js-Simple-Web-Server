@@ -1,0 +1,16 @@
+{
+  "name": "weather_app",
+  "version": "1.0.0",
+  "description": "Get current weather condition using AccuWeather API calls",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Lo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.8",
+    "express": "^4.16.3"
+  }
+}
