@@ -27,31 +27,41 @@ app.set('views',path.join(__dirname, 'views'));
 //HTTP Get Request Handling
 app.get('/',function(req,res){
   //res.send('Hello World!')
-  console.log('Got Visit Here!');
+  console.log('We Got Visit Here!');
   res.render('index');
 });
 
 //HTTP Post Request Handling
 app.post('/',function(req,res){
-  console.log('Someon Just Post a Request!');
+  console.log('Someone Just Post a Request!');
   //console.log(req.body);
-  console.log(req.body.city);
+  //console.log(req.body.city);
   let city = req.body.city;
+  console.log(city);
   let url =  `http://apidev.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
-  console.log('API URL is '+ url);
+  console.log('API URL is: '+ url);
+
+//Make API Call
 request(url, function(err, response, body){
-  if(err){
+  if(err){                          //Check Misc. Errors
     res.render('index',{error:'The Freak"n City You Just Entered Does Not Exist'});
+    console.log('Error!!');
   } else {
-
     //console.log(body);
-    let stage1 = JSON.parse(body);
+    let stage1 = JSON.parse(body); //Parse Json Response
     //console.log(stage1);
-    console.log(stage1[0].Key);
-    //console.log(stage1.Key);
-    //console.log(stage1.Version);
+    if(stage1[0] == undefined){    //Check Validity
+      res.render('index',{error:'The Freak"n City You Just Entered Does Not Exist'});
+      console.log('The City Does Not Exist');
+    } else {                      //Get Location Key + Longitude & Latitude
+      console.log(stage1[0].Key);
+      console.log(stage1[0].GeoPosition.Latitude);
+      console.log(stage1[0].GeoPosition.Longitude);
+      //console.log(stage1[0]);
+      //console.log(stage1.Key);
+      //console.log(stage1.Version);
+    }
   }
-
 });
 });
 
