@@ -4,5 +4,5 @@ A basic HTTP web server built with Node.js
 A basic web app built with Node.js that interacts with MongoDB
 # Core3: Node.js-Weather-Site
 An interactive site that makes calls to AccuWeather API. The site will retrieve the weather information of the given city
-Live at: https://app.hashx.tk
 
+Live at: https://app.hashx.tk
