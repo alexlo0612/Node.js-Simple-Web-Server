@@ -3,17 +3,28 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const request = require('request');
+const GoogleMapsAPI = require ('googlemaps');
 //Global Variable
 //const apikey = 'haecPfYw9wk6eqUVNGAjumbeIEEFkmIy'
 const apikey = 'hoArfRosT1215'
+
+//Define & Initialize App
+const app = express();
 
 /*
 const (var) --> global variable
 let --> block variable
 */
+app.use(function(req,res,next){
+  res.locals.errors = null,
+  res.locals.Latitude = null,
+  res.locals.Longitude = null,
+  res.locals.Weather = null,
+  res.locals.Temperature = null,
+  res.locals.place_id =null
+  next();
+});
 
-//Define & Initialize App
-const app = express();
 
 //Set Up URL Parser
 app.use(bodyParser.urlencoded({
@@ -31,10 +42,11 @@ app.get('/', function(req, res) {
   console.log('We Got Visit Here!');
   res.render('index', {
     error: null,
-    Latitude: null,
-    Longitude: null,
-    Weather: null,
-    Temperature: null
+    Latitude: 'Latitude: ',
+    Longitude: 'Longitude: ',
+    Weather: 'Weather: ',
+    Temperature: 'Temperature: ',
+    place_id: 'ChIJrUldGqrWaDQR2vYXX6n7SBM'
   });
 });
 
@@ -56,7 +68,8 @@ app.post('/', function(req, res) {
         Latitude: null,
         Longitude: null,
         Weather: null,
-        Temperature: null
+        Temperature: null,
+        place_id: null
 
       });
       console.log('Error!!');
@@ -70,7 +83,8 @@ app.post('/', function(req, res) {
           Latitude: null,
           Longitude: null,
           Weather: null,
-          Temperature: null
+          Temperature: null,
+          place_id: null
 
         });
         console.log('The City Does Not Exist');
@@ -98,7 +112,8 @@ app.post('/', function(req, res) {
               Latitude: null,
               Longitude: null,
               Weather: null,
-              Temperature: null
+              Temperature: null,
+              place_id: null
             });
             console.log('Error!!');
           } else {
@@ -107,13 +122,50 @@ app.post('/', function(req, res) {
             let Temperature = stage2[0].Temperature.Metric.Value;
             console.log(stage2[0].WeatherText);
             console.log(stage2[0].Temperature.Metric.Value);
-            res.render('index',{
-              error: null,
-              Latitude: 'Latitude: ' + Latitude,
-              Longitude: 'Longitude: ' + Longitude,
-              Weather: 'Condition: ' + Weather,
-              Temperature: 'Temperature: ' + Temperature +' Celsius'
+            //google map
+            const googleconfig = {
+              key:'AIzaSyCkkjZo3OlxKIaMpBSv2b2goXA9Vuru4rs',
+              stagger_time: 1000,
+              encode_polylines: true,
+              secure: true
+            };
+            const gmAPI = new GoogleMapsAPI(googleconfig);
+
+            const reverseGeoCodeParams = {
+              "latlng":`${Latitude},${Longitude}`,
+              "result_type": "postal_code",
+              "language":      "en",
+              "location_type": "APPROXIMATE"
+            };
+            gmAPI.reverseGeocode(reverseGeoCodeParams,function(err, result){
+              if (err) {
+                res.render('index', {
+                  error: 'Error!!!',
+                  Latitude: null,
+                  Longitude: null,
+                  Weather: null,
+                  Temperature: null,
+                  place_id: null
+                });
+                console.log('Error!!');
+              } else {
+                let place_id = result.results[0].place_id;
+                console.log(place_id);
+                //console.log(result.results[0].place_id);
+                //console.log(result.results[0].place_id);
+                res.render('index',{
+                  error: null,
+                  Latitude: 'Latitude: ' + Latitude,
+                  Longitude: 'Longitude: ' + Longitude,
+                  Weather: 'Condition: ' + Weather,
+                  Temperature: 'Temperature: ' + Temperature +' Celsius',
+                  place_id: place_id
+                //Map end
+                });
+              }
+
             });
+
             /*console.log(body);
             console.log(stage2);
             let Weather = stage2[0].WeatherText;

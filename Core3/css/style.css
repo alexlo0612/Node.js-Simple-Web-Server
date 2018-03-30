@@ -4,14 +4,23 @@
 */
 
 body {
+  position: static;
   width: 800px;
   margin: 0 auto;
   font-family: 'Open Sans', sans-serif;
 }
 .container {
-  width: 600px;
+  width: 750px;
   margin: 0 auto;
 }
+
+.Google-Map {
+  width: 750px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+}
+
+
 fieldset {
   display: block;
   -webkit-margin-start: 0px;
@@ -27,7 +36,7 @@ fieldset {
   border-image-outset: initial;
   border-image-repeat: initial;
   min-width: -webkit-min-content;
-  padding: 30px;
+  padding: 0px;
 }
 .weather-input, p {
   display: block;

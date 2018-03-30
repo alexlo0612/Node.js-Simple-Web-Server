@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
+
     <div class="container">
       <fieldset>
         <form action="/" method="post">
@@ -27,8 +28,25 @@
         <%if(Temperature !== null){ %>
           <h1><%= Temperature %> </h1>
         <% } %>
-      </div>
-
+        <!--<%if(place_id !== null){ %>
+          <h1><%= place_id %> </h1>
+        <% } %> -->
       </fieldset>
+    </div>
+
+    <div class="Google-Map">
+      <h2>Map:</h2>
+      <%if(place_id !== null){ %>
+        <iframe
+          width="750"
+          height="450"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkkjZo3OlxKIaMpBSv2b2goXA9Vuru4rs
+          &q=place_id:<%= place_id %>" allowfullscreen>
+        </iframe>
+      <% } %>
+
+    </div>
   </body>
+
 </html>
