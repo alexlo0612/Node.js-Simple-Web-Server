@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const request = require('request');
 const GoogleMapsAPI = require ('googlemaps');
+//const fs = require ('fs');
 //Global Variable
 const apikey = 'haecPfYw9wk6eqUVNGAjumbeIEEFkmIy'
 //const apikey = 'hoArfRosT1215'
@@ -152,19 +153,34 @@ app.post('/', function(req, res) {
                 });
                 console.log('Error!!');
               } else {
-                let place_id = result.results[0].place_id;
-                console.log(place_id);
-                //console.log(result.results[0].place_id);
-                //console.log(result.results[0].place_id);
-                res.render('index',{
-                  error: null,
-                  Latitude: 'Latitude: ' + Latitude,
-                  Longitude: 'Longitude: ' + Longitude,
-                  Weather: 'Condition: ' + Weather,
-                  Temperature: 'Temperature: ' + Temperature +' Celsius',
-                  place_id: place_id
-                //Map end
-                });
+                //console.log(result)
+                //let place_id = result.results[0].place_id;
+                console.log(result.status);
+                if (result.status !== 'OK'){
+                  res.render('index', {
+                    error: 'Map Error!!!',
+                    Latitude: null,
+                    Longitude: null,
+                    Weather: null,
+                    Temperature: null,
+                    place_id: null
+                  });
+                  console.log('Map Error!!');
+                } else {
+                  let place_id = result.results[0].place_id;
+                  console.log(place_id);
+                  //console.log(result.results[0].place_id);
+                  //console.log(result.results[0].place_id);
+                  res.render('index',{
+                    error: null,
+                    Latitude: 'Latitude: ' + Latitude,
+                    Longitude: 'Longitude: ' + Longitude,
+                    Weather: 'Condition: ' + Weather,
+                    Temperature: 'Temperature: ' + Temperature +' Celsius',
+                    place_id: place_id
+                  //Map end
+                  });
+                }
               }
 
             });
