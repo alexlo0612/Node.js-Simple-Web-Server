@@ -5,8 +5,8 @@ const path = require('path');
 const request = require('request');
 const GoogleMapsAPI = require ('googlemaps');
 //Global Variable
-//const apikey = 'haecPfYw9wk6eqUVNGAjumbeIEEFkmIy'
-const apikey = 'hoArfRosT1215'
+const apikey = 'haecPfYw9wk6eqUVNGAjumbeIEEFkmIy'
+//const apikey = 'hoArfRosT1215'
 
 //Define & Initialize App
 const app = express();
@@ -57,7 +57,9 @@ app.post('/', function(req, res) {
   //console.log(req.body.city);
   let city = req.body.city;
   console.log(city);
-  let url = `http://apidev.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
+  let url = `https://dataservice.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
+  //let url = `http://api.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
+  //let url = `http://apidev.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
   console.log('API URL is: ' + url);
 
   //Make API Call
@@ -103,8 +105,9 @@ app.post('/', function(req, res) {
           Weather: null,
           Temperature: null
         }); */
-
-        let url2 = `http://apidev.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
+        let url2 = `http://dataservice.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
+        //let url2 = `http://api.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
+        //let url2 = `http://apidev.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
         request(url2, function(err, response, body) {
           if (err) {
             res.render('index', {
