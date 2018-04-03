@@ -60,11 +60,12 @@ app.post('/', function(req, res) {
   console.log(city);
   //let url = `https://dataservice.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
   //let url = `http://api.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
-  let url = `http://apidev.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
+  let url = `https://apidev.accuweather.com/locations/v1/search?q=${city}&apikey=${apikey}`;
   console.log('API URL is: ' + url);
+  console.log('Encoded API URL is: ' + encodeURI(url));
 
   //Make API Call
-  request(url, function(err, response, body) {
+  request(encodeURI(url), function(err, response, body) {
     if (err) { //Check Misc. Errors
       res.render('index', {
         error: 'Error!!',
@@ -75,9 +76,11 @@ app.post('/', function(req, res) {
         place_id: null
 
       });
-      console.log('Error!!');
+      console.log('URLError!!');
     } else {
+      //console.log(encodeURI(url));
       //console.log(body);
+      //console.log('Here:' + body)
       let stage1 = JSON.parse(body); //Parse Json Response
       //console.log(stage1);
       if (stage1[0] == undefined) { //Check Validity
@@ -108,8 +111,8 @@ app.post('/', function(req, res) {
         }); */
         //let url2 = `http://dataservice.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
         //let url2 = `http://api.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
-        let url2 = `http://apidev.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
-        request(url2, function(err, response, body) {
+        let url2 = `https://apidev.accuweather.com/currentconditions/v1/${locationkey}.json?language=en&apikey=${apikey}`;
+        request(encodeURI(url2), function(err, response, body) {
           if (err) {
             res.render('index', {
               error: 'Error!!!',
