@@ -6,3 +6,5 @@ A basic web app built with Node.js that interacts with MongoDB
 An interactive site that makes calls to AccuWeather API. The site will retrieve the weather information of the given city
 
 Live at: https://app.hashx.tk
+# Core4: Node.js-QR-Code-Generator
+An interactive site that generates QR Code from user inputs
