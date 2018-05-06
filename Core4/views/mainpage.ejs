@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QR Code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheet.css" />
+    <script src="main.js"></script>
+    <script type="text/javascript" src="qrcode.js"></script>
+</head>
+<body>
+    <div class = 'container'>
+        <fieldset>
+            <!--<legend>Input Your Text</legend>-->
+            <h1><%= title %></h1>
+            <%- img %>
+            <form action="/" method="post" >
+                <!--<input name="Textbox" type="text" placeholder="Enter Your Text" required>form="textarea"id="textarea"-->
+                <input name="Button" type="submit" value="Generate" class ="Button">
+                <textarea rows="10" cols="10" name="Textbox" required autofocus ></textarea>
+              
+            </form>
+            <!--or
+            <form action="/" method="post" id="textarea">
+                <input name="Textbox" type="text" placeholder="Enter Your Text" required>
+                <input name="Button" type="submit" value="Generate">   
+            </form>
+            <textarea rows="25" cols="200" name="Textbox" form="textarea"  ></textarea>
+            -->
+        </fieldset>
+    </div>
+
+    
+        
+        
+
+    
+    
+    
+</body>
+</html>
