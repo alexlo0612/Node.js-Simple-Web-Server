@@ -18,8 +18,6 @@ app.use(express.static(path.join(__dirname, 'css')));
 app.set('view engine', 'ejs');
 app.set('views',path.join(__dirname,'views'));
 
-
-
 //HTTP GET Request Handling / Routing
 app.get('/',function(req,res){
     console.log('Visitor Hits');
@@ -44,6 +42,7 @@ app.post('/', function(req,res){
     let qrcode_img = qr.createImgTag(10,2);
     //document.getElementById('qr_show').innerHTML = qr.createImgTag(); //-->failed
     //console.log(qr.createImgTag());
+    console.log('QR Code Generated!');
 
     res.render('mainpage', {
         title: 'QR CODE Main Page',
