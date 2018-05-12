@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,34 +10,40 @@
     <script src="main.js"></script>
     <script type="text/javascript" src="qrcode.js"></script>
 </head>
+
 <body>
-    <div class = 'container'>
-        <fieldset>
-            <!--<legend>Input Your Text</legend>-->
-            <h1><%= title %></h1>
+    <div class='container'>
+        <!--<legend>Input Your Text</legend>-->
+        <h1>
+            <%= title %>
+        </h1>
+        <div class="qrshow">
             <%- img %>
-            <form action="/" method="post" >
-                <!--<input name="Textbox" type="text" placeholder="Enter Your Text" required>form="textarea"id="textarea"-->
-                <input name="Button" type="submit" value="Generate" class ="Button">
-                <textarea rows="10" cols="10" name="Textbox" required autofocus ></textarea>
-              
-            </form>
-            <!--or
+        </div>
+
+        <form action="/" method="post">
+            <!--<input name="Textbox" type="text" placeholder="Enter Your Text" required>form="textarea"id="textarea"-->
+            <div class="qrval">
+                <textarea rows="10" cols="10" name="Textbox" required autofocus></textarea>
+            </div>
+            <input name="Button" type="submit" value="Generate" class="btn">
+        </form>
+        <!--or
             <form action="/" method="post" id="textarea">
                 <input name="Textbox" type="text" placeholder="Enter Your Text" required>
                 <input name="Button" type="submit" value="Generate">   
             </form>
             <textarea rows="25" cols="200" name="Textbox" form="textarea"  ></textarea>
             -->
-        </fieldset>
     </div>
 
-    
-        
-        
 
-    
-    
-    
+
+
+
+
+
+
 </body>
+
 </html>
