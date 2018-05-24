@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>Click!</button>
+    <script>
+        function startGame() {
+            let i = 0;
+            document.querySelector('button').addEventListener('click', () => {
+                ++i;
+            });
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (i > 5) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }, 2000);
+            });
+        };
+        startGame()
+            .then(() => alert('You won!'))
+            .catch(() => alert('You lost!'));
+    </script>
+</body>
+
+</html>

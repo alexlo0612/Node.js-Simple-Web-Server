@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>Click!</button>
+    <script>
+        //console.log("Game Starting");
+        let i = 0;
+        document.querySelector('button').addEventListener('click', () => {
+            //i++; will return the original value of i
+            ++i; // but in a for loop either will work
+        });
+        setTimeout(() => {
+            if (i > 5) {
+                alert('You Won!' + i);
+            } else {
+                alert('Srry mate, U lost...');
+            }
+        }, 2000);
+    </script>
+</body>
+
+</html>

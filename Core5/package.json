@@ -1,0 +1,15 @@
+{
+  "name": "mongodb_crud",
+  "version": "1.0.0",
+  "description": "crud app on mongodb",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Alex Lo",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "mocha": "^5.2.0",
+    "mongoose": "^5.1.2"
+  }
+}
