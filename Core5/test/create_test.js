@@ -2,7 +2,7 @@
 const assert = require('assert');
 //Import Test Files
 const User = require('../src/user');
-//Start Test (Major Block) awefwegssssss
+//Start Test (Major Block) awefwegsssssss
 describe('Creating DB Records', () => {
   //Test Subblock
   it('Save User', () => {
