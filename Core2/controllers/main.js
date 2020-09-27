@@ -1,5 +1,9 @@
 // Dependencies
 const axios = require('axios').default;
+const { Client, } = require('@googlemaps/google-maps-services-js');
+// Create a new instance of Client
+const client = new Client({});
+
 
 // API URL Function
 const { apiUrlFunc, } = require('../config/apiURL');
@@ -9,18 +13,8 @@ const { apiUrlFunc, } = require('../config/apiURL');
 // @access Public
 const home = (req, res) => {
 
-    // Object to be rendered
-    const renderObj = {
-        error: null,
-        Latitude: 'Latitude: ',
-        Longitude: 'Longitude: ',
-        Weather: 'Weather: ',
-        Temperature: 'Temperature: ',
-        place_id: null,
-    };
-
     // Renders the page
-    res.render('index', renderObj);
+    res.render('index');
 };
 
 // @desc Retruns the wather information
@@ -33,48 +27,47 @@ const mapQuery = async (req, res) => {
         // Extract the city out of the request body
         const { city, } = req.body;
 
-        // Make call to the AccuWeather location API
-        const locationResult = await axios
-            .get(apiUrlFunc('Location', city))
-            .catch(err => {
-                throw `Error Getting the Location: ${err}`;
+        //Call the Google geocoding API to get the coordinates of the input city
+        const locationResultGoogle = await client
+            .geocode({
+                params: {
+                    address: city,
+                    key: process.env.GOOGE_GEO_CODING_API_KEY,
+                },
             });
 
-        // Get the location key from the response
-        const locationKey = locationResult.data[0].Key;
+        // Extract the coordinates from the response
+        const { lat, lng, } = locationResultGoogle.data.results[0].geometry.location;
 
-        // Get the coordinates from the response
-        const coordinates = locationResult.data[0].GeoPosition;
-
-        // Make call to the AccuWeather current condition API
-        const weatherResult = await axios
-            .get(apiUrlFunc('Weather', locationKey))
+        // Call the OpenWeather OneCall API to get the current weather data
+        const weatherResultOpenWeather = await axios
+            .get(apiUrlFunc('OneCallOpenWeather', undefined, undefined, lat, lng))
             .catch(err => {
-                throw `Error Getting the Location: ${err}`;
+                throw `Error Getting Weather Data: ${err}`;
             });
+
+        // Extract the weather data from the response
+        const weatherData = weatherResultOpenWeather.data.current;
+        const { temp, humidity, feels_like: realFeel, } = weatherData;
+        const { main: currentCondition, description: desc, } = weatherData.weather[0];
+
 
         // Object to be rendered
         const renderObj = {
-            error: null,
-            Latitude: coordinates[0],
-            Longitude: coordinates[1],
-            Weather: 'Weather: ',
-            Temperature: 'Temperature: ',
-            place_id: null,
+            Latitude: lat,
+            Longitude: lng,
+            Weather: currentCondition.toLowerCase(),
+            Description: desc,
+            Temperature: `${temp} C`,
+            realFeel: `${realFeel} C`,
+            humidity: `${humidity}%`,
         };
-
-        // Renders the page
         res.render('index', renderObj);
 
     } catch (error) {
         // Object to be rendered
         const renderObj = {
             error: 'Service Unavailable At the Moment',
-            Latitude: null,
-            Longitude: null,
-            Weather: null,
-            Temperature: null,
-            place_id: null,
         };
         res.render('index', renderObj);
         console.log(error);
@@ -86,13 +79,23 @@ const mapQuery = async (req, res) => {
 // Export the module
 module.exports = { mapQuery, home, };
 
-// const { Client, } = require('@googlemaps/google-maps-services-js');g
-// Create a new instance of Client
-// const client = new Client({});
-// const result = await client.geocode({
-//     params: {
-//         address: city,
-//         key: process.env.GOOGE_GEO_CODING_API_KEY
-//     }
-// })
-// console.log(result.data.results[0])
+
+// // Make call to the AccuWeather location API
+// const locationResultAccu = await axios
+//     .get(apiUrlFunc('LocationAccu', city))
+//     .catch(err => {
+//         throw `Error Getting the Location: ${err}`;
+//     });
+
+// // Get the location key from the response
+// const locationKey = locationResultAccu.data[0].Key;
+
+// // Get the coordinates from the response
+// const coordinates = locationResultAccu.data[0].GeoPosition;
+
+// // Make call to the AccuWeather current condition API
+// const weatherResultAccu = await axios
+//     .get(apiUrlFunc('WeatherAccu', locationKey))
+//     .catch(err => {
+//         throw `Error Getting the Location: ${err}`;
+//     });

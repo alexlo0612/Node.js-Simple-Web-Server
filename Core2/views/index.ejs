@@ -21,18 +21,22 @@
         <% if(error !== null){ %>
         <h1><%= error %> </h1>
         <% } %> <%if(Latitude !== null){ %>
-        <h1><%= Latitude %> </h1>
+        <h1>Latitude: <%= Latitude %> </h1>
         <% } %> <%if(Longitude !== null){ %>
-        <h1><%= Longitude %> </h1>
+        <h1>Longitude: <%= Longitude %> </h1>
         <% } %> <%if(Weather !== null){ %>
-        <h1><%= Weather %> </h1>
+        <h1>Weather: <%= Weather %> </h1>
+        <% } %> <%if(Description !== null){ %>
+        <h1>Description: <%= Description %> </h1>
         <% } %> <%if(Temperature !== null){ %>
-        <h1><%= Temperature %> </h1>
-        <% } %>
-        <!--<%if(place_id !== null){ %>
-          <h1><%= place_id %> </h1>
-        <% } %> -->
+        <h1>Temperature: <%= Temperature %> </h1>
+        <% } %> <% if(realFeel!== null){ %>
+        <h1>Feels Like: <%= realFeel %> </h1>
+        <% } %> <% if(humidity!== null){ %>
+        <h1>Humidity: <%= humidity %> </h1><% } %>
+        <!--  -->
       </fieldset>
+      <fieldset></fieldset>
     </div>
 
     <div class="Google-Map">

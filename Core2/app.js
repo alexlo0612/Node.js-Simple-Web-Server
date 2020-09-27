@@ -51,6 +51,20 @@ app.use(express.static(path.join(__dirname, 'css')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Set default render options
+app.use((req, res, next) => {
+  res.locals.error = null,
+    res.locals.Latitude = null,
+    res.locals.Longitude = null,
+    res.locals.Weather = null,
+    res.locals.Description = null,
+    res.locals.Temperature = null,
+    res.locals.realFeel = null,
+    res.locals.humidity = null,
+    res.locals.place_id = null,
+    next();
+});
+
 // Load Routes
 const Main = require('./routes/main');
 
