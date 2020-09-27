@@ -30,8 +30,5 @@ module.exports = {
         //     "properties": "",
         //     "ignoreDestructuring": false
         // }],
-    },
-    "overrides": {
-        "excludeFiles": "*.ejs"
     }
 };
