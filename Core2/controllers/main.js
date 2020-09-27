@@ -1,12 +1,5 @@
-// Dependencies
-const axios = require('axios').default;
-const { Client, } = require('@googlemaps/google-maps-services-js');
-// Create a new instance of Client
-const client = new Client({});
-
-
-// API URL Function
-const { apiUrlFunc, } = require('../config/apiURL');
+// The weather function
+const { weatherFunc, } = require('../config/weather');
 
 // @desc The main route and the home page of the app
 // @route GET /
@@ -22,57 +15,34 @@ const home = (req, res) => {
 // @access Public
 const mapQuery = async (req, res) => {
 
-    try {
+    // Extract the city out of the request body
+    const { city, } = req.body;
 
-        // Extract the city out of the request body
-        const { city, } = req.body;
+    // Weather Function
+    const weatherInfo = await weatherFunc(city);
 
-        //Call the Google geocoding API to get the coordinates of the input city
-        const locationResultGoogle = await client
-            .geocode({
-                params: {
-                    address: city,
-                    key: process.env.GOOGE_GEO_CODING_API_KEY,
-                },
-            });
-
-        // Extract the coordinates from the response
-        const { lat, lng, } = locationResultGoogle.data.results[0].geometry.location;
-
-        // Call the OpenWeather OneCall API to get the current weather data
-        const weatherResultOpenWeather = await axios
-            .get(apiUrlFunc('OneCallOpenWeather', undefined, undefined, lat, lng))
-            .catch(err => {
-                throw `Error Getting Weather Data: ${err}`;
-            });
-
-        // Extract the weather data from the response
-        const weatherData = weatherResultOpenWeather.data.current;
-        const { temp, humidity, feels_like: realFeel, } = weatherData;
-        const { main: currentCondition, description: desc, } = weatherData.weather[0];
-
-
-        // Object to be rendered
-        const renderObj = {
-            Latitude: lat,
-            Longitude: lng,
-            Weather: currentCondition.toLowerCase(),
-            Description: desc,
-            Temperature: `${temp} C`,
-            realFeel: `${realFeel} C`,
-            humidity: `${humidity}%`,
-        };
-        res.render('index', renderObj);
-
-    } catch (error) {
+    // Error Checking
+    if (weatherInfo === 'No Good') {
         // Object to be rendered
         const renderObj = {
             error: 'Service Unavailable At the Moment',
         };
         res.render('index', renderObj);
-        console.log(error);
+        return;
     }
 
+    // Object to be rendered
+    const renderObj = {
+        Latitude: weatherInfo[0],
+        Longitude: weatherInfo[1],
+        Weather: weatherInfo[2],
+        Description: weatherInfo[3],
+        Temperature: weatherInfo[4],
+        realFeel: weatherInfo[5],
+        humidity: weatherInfo[6],
+        place_id: weatherInfo[7],
+    };
+    res.render('index', renderObj);
 };
 
 

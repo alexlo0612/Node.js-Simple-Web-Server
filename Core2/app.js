@@ -54,14 +54,14 @@ app.set('views', path.join(__dirname, 'views'));
 // Set default render options
 app.use((req, res, next) => {
   res.locals.error = null,
-    res.locals.Latitude = null,
-    res.locals.Longitude = null,
+    res.locals.Latitude = '24.0585107',
+    res.locals.Longitude = '121.1628284',
     res.locals.Weather = null,
     res.locals.Description = null,
     res.locals.Temperature = null,
     res.locals.realFeel = null,
     res.locals.humidity = null,
-    res.locals.place_id = null,
+    res.locals.place_id = 'ChIJd6tSARHCaDQRHFr7LOLpHGo',
     next();
 });
 
