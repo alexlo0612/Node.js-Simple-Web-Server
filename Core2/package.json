@@ -9,7 +9,9 @@
   "author": "Alex Lo",
   "license": "ISC",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.8",
     "body-parser": "^1.18.2",
+    "dotenv": "^8.2.0",
     "ejs": "^2.5.9",
     "express": "^4.16.3",
     "googlemaps": "^1.12.0",
