@@ -1,13 +1,28 @@
 // The weather function
 const { weatherFunc, } = require('../config/weather');
 
-// @desc The main route and the home page of the app
+// @desc The main route and the home page of the app. It renders the weather condition of my hometown by default
 // @route GET /
 // @access Public
-const home = (req, res) => {
+const home = async (req, res) => {
+
+    // Weather Function (default = my hometown)
+    const weatherInfo = await weatherFunc('Cingjing farm');
+
+    // Default object to be rendered
+    const renderDefObj = {
+        Latitude: weatherInfo[0],
+        Longitude: weatherInfo[1],
+        Weather: weatherInfo[2],
+        Description: weatherInfo[3],
+        Temperature: weatherInfo[4],
+        realFeel: weatherInfo[5],
+        humidity: weatherInfo[6],
+        place_id: weatherInfo[7],
+    };
 
     // Renders the page
-    res.render('index');
+    res.render('index', renderDefObj);
 };
 
 // @desc Retruns the wather information
