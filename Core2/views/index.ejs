@@ -1,32 +1,38 @@
-<!DOCTYPE html>
+< !DOCTYPE html >
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Weather</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-
     <div class="container">
       <fieldset>
         <form action="/" method="post">
-          <input name="city" type="text" placeholder="Enter a City" class ="weather-input" required>
-          <input name="lol" type="submit" value="Get Weather" class="weather-button">
+          <input
+            name="city"
+            type="text"
+            placeholder="Enter a City"
+            class="weather-input"
+            required
+          />
+          <input
+            name="lol"
+            type="submit"
+            value="Get Weather"
+            class="weather-button"
+          />
         </form>
         <% if(error !== null){ %>
-          <h1><%= error %> </h1>
-        <% } %>
-        <%if(Latitude !== null){ %>
-          <h1><%= Latitude %> </h1>
-        <% } %>
-        <%if(Longitude !== null){ %>
-          <h1><%= Longitude %> </h1>
-        <% } %>
-        <%if(Weather !== null){ %>
-          <h1><%= Weather %> </h1>
-        <% } %>
-        <%if(Temperature !== null){ %>
-          <h1><%= Temperature %> </h1>
+        <h1><%= error %> </h1>
+        <% } %> <%if(Latitude !== null){ %>
+        <h1><%= Latitude %> </h1>
+        <% } %> <%if(Longitude !== null){ %>
+        <h1><%= Longitude %> </h1>
+        <% } %> <%if(Weather !== null){ %>
+        <h1><%= Weather %> </h1>
+        <% } %> <%if(Temperature !== null){ %>
+        <h1><%= Temperature %> </h1>
         <% } %>
         <!--<%if(place_id !== null){ %>
           <h1><%= place_id %> </h1>
@@ -37,16 +43,17 @@
     <div class="Google-Map">
       <h2>Map:</h2>
       <%if(place_id !== null){ %>
-        <iframe
-          width="750"
-          height="450"
-          frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkkjZo3OlxKIaMpBSv2b2goXA9Vuru4rs
-          &q=place_id:<%= place_id %>" allowfullscreen>
-        </iframe>
+      <iframe
+        width="750"
+        height="450"
+        frameborder="0"
+        style="border: 0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkkjZo3OlxKIaMpBSv2b2goXA9Vuru4rs
+          &q=place_id:<%= place_id %>"
+        allowfullscreen
+      >
+      </iframe>
       <% } %>
-
     </div>
   </body>
-
 </html>
